@@ -1,4 +1,6 @@
 sudo:required
+language: generic
+
 services:
   - docker
 
@@ -9,10 +11,10 @@ script:
   - docker run -e CI=true meir192/react-test npm run test
 
 after_success:
-  - docker build -t meir192/multi-client -f ./client
-  - docker build -t meir192/multi-nginx -f ./nginx
-  - docker build -t meir192/multi-server -f ./server
-  - docker build -t meir192/multi-worker -f ./worker
+  - docker build -t meir192/multi-client ./client
+  - docker build -t meir192/multi-nginx ./nginx
+  - docker build -t meir192/multi-server ./server
+  - docker build -t meir192/multi-worker ./worker
   # login to the docker CLI
   - echo "$DOCKER_PASSWORD"  | docker login -u "$DOCKER_ID" --pasword-stdin
   # push images to docker hub
